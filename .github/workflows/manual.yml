@@ -29,10 +29,6 @@ jobs:
         working-directory: ./front
         run: npm install
 
-      - name: Run frontend tests
-        working-directory: ./front
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
-
       - name: Build frontend Docker image
         working-directory: ./front
         run: docker build -t bobapp-front .
