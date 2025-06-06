@@ -34,6 +34,12 @@ jobs:
         working-directory: ./front
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
+      - name: Generate coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: front/coverage/bobapp/lcov.info
+
       - name: Build frontend Docker image
         working-directory: ./front
         run: docker build -t bobapp-front .
@@ -56,14 +62,20 @@ jobs:
         working-directory: ./back
         run: mvn clean verify
 
+      - name: Upload backend coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: back/target/site/jacoco/jacoco.xml
+
       - name: Build backend Docker image
         working-directory: ./back
         run: docker build -t bobapp-back .
 
-  sonarqube:
-    name: Analyze code with SonarQube
+  sonarqube-frontend:
+    name: Analyze frontend with SonarCloud
     runs-on: ubuntu-latest
-    needs: [frontend, backend]
+    needs: frontend
 
     steps:
       - name: Checkout code
@@ -71,7 +83,38 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarQube Scan
+      - name: Frontend scan
         uses: sonarsource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=WassimZerouta_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
+            -Dsonar.organization=wassimzerouta
+            -Dsonar.sources=./src
+            -Dsonar.projectBaseDir=front
+            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+
+  sonarqube-backend:
+    name: Analyze backend with SonarCloud
+    runs-on: ubuntu-latest
+    needs: backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Backend scan 
+        uses: sonarsource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=wassimzerouta_bobapp-backend
+            -Dsonar.organization=wassimzerouta
+            -Dsonar.sources=./src
+            -Dsonar.projectBaseDir=back
+            -Dsonar.java.coveragePlugin=jacoco
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
