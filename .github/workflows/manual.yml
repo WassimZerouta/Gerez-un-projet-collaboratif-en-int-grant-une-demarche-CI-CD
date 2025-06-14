@@ -112,10 +112,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Install backend dependencies
-        working-directory: ./back
-        run: mvn clean compile
-
       - name: Backend scan 
         uses: sonarsource/sonarcloud-github-action@v2
         env:
@@ -124,7 +120,7 @@ jobs:
           args: >
             -Dsonar.projectKey=wassimzerouta_bobapp-backend
             -Dsonar.organization=wassimzerouta
-            -Dsonar.sources=./src
+            -Dsonar.sources=src/main/java
             -Dsonar.projectBaseDir=back
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.coveragePlugin=jacoco
