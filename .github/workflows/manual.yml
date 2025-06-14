@@ -112,6 +112,10 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: Install backend dependencies 
+        working-directory: ./back
+        run: mvn compile
+
       - name: Backend scan 
         uses: sonarsource/sonarcloud-github-action@v2
         env:
