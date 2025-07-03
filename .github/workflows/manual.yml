@@ -62,6 +62,10 @@ jobs:
         working-directory: ./back
         run: mvn clean verify
 
+      - name: Check JaCoCo report exists
+        working-directory: ./back
+        run: ls -l target/site/jacoco
+
       - name: Upload backend coverage report
         uses: actions/upload-artifact@v4
         with:
@@ -106,10 +110,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check if JaCoCo report exists
-        run: ls -l back/target/site/jacoco
-
       - name: Backend scan 
+        working-directory: ./back
         uses: sonarsource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -117,7 +119,7 @@ jobs:
           args: >
             -Dsonar.projectKey=wassimzerouta_bobapp-backend
             -Dsonar.organization=wassimzerouta
-            -Dsonar.projectBaseDir=back
+            -Dsonar.projectBaseDir=.
             -Dsonar.sources=src/main/java
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.coveragePlugin=jacoco
