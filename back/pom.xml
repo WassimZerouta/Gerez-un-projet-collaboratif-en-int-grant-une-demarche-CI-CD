@@ -65,10 +65,15 @@
             </goals>
             <configuration>
               <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+              <reports>
+                <report>xml</report>
+                <report>html</report>
+              </reports>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
 </project>
