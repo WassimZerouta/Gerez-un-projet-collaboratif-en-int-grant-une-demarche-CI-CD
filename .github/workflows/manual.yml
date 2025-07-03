@@ -63,6 +63,10 @@ jobs:
         working-directory: ./back
         run: mvn clean verify
 
+      - name: Debug JaCoCo XML
+        working-directory: ./back
+        run: find . -name "jacoco.xml"
+
       - name: Upload backend coverage report
         uses: actions/upload-artifact@v4
         with:
