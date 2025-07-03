@@ -117,16 +117,16 @@ jobs:
         run: mvn compile
 
       - name: Backend scan 
-        uses: sonarsource/sonarcloud-github-action@v2
+        run: |
+          cd back
+          sonar-scanner \
+            -Dsonar.projectKey=wassimzerouta_bobapp-backend \
+            -Dsonar.organization=wassimzerouta \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dsonar.java.coveragePlugin=jacoco \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+            -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=wassimzerouta_bobapp-backend
-            -Dsonar.organization=wassimzerouta
-            -Dsonar.sources=src/main/java
-            -Dsonar.projectBaseDir=back
-            -Dsonar.java.binaries=./target/classes
-            -Dsonar.java.coveragePlugin=jacoco
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
