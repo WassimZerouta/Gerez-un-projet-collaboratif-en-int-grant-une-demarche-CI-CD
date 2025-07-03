@@ -66,8 +66,9 @@
             <configuration>
               <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
               <reports>
-                <report>xml</report>
-                <report>html</report>
+                <xml enabled="true"/>
+                <html enabled="true"/>
+                <csv enabled="false"/>
               </reports>
             </configuration>
           </execution>
@@ -75,5 +76,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
