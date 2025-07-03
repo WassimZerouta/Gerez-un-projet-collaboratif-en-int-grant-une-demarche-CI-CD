@@ -73,29 +73,6 @@ jobs:
         working-directory: ./back
         run: docker build -t bobapp-back .
 
-  sonarqube-frontend:
-    name: Analyze frontend with SonarCloud
-    runs-on: ubuntu-latest
-    needs: frontend
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Frontend scan
-        uses: sonarsource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=WassimZerouta_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
-            -Dsonar.organization=wassimzerouta
-            -Dsonar.sources=./src
-            -Dsonar.projectBaseDir=front
-            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
-
   sonarqube-backend:
     name: Analyze backend with SonarCloud
     runs-on: ubuntu-latest
@@ -107,9 +84,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check if JaCoCo report exists
-        run: ls -l back/target/site/jacoco
-
       - name: Backend scan 
         uses: sonarsource/sonarcloud-github-action@v2
         env:
@@ -118,8 +92,8 @@ jobs:
           args: >
             -Dsonar.projectKey=wassimzerouta_bobapp-backend
             -Dsonar.organization=wassimzerouta
-            -Dsonar.sources=./src
             -Dsonar.projectBaseDir=back
+            -Dsonar.sources=src/main/java
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.coveragePlugin=jacoco
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
