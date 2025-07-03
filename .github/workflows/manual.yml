@@ -83,7 +83,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+          
+      - name: Compile backend
+        working-directory: ./back
+        run: mvn compile
+        
       - name: Backend scan 
         uses: sonarsource/sonarcloud-github-action@v2
         env:
