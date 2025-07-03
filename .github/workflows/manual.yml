@@ -62,10 +62,6 @@ jobs:
         working-directory: ./back
         run: mvn clean verify
 
-      - name: Check JaCoCo report exists
-        working-directory: ./back
-        run: ls -l target/site/jacoco
-
       - name: Upload backend coverage report
         uses: actions/upload-artifact@v4
         with:
@@ -110,7 +106,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Backend scan 
+      - name: Backend scan
         working-directory: ./back
         uses: sonarsource/sonarcloud-github-action@v2
         env:
