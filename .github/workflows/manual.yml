@@ -129,3 +129,4 @@ jobs:
             -Dsonar.java.binaries=./target/classes
             -Dsonar.java.coveragePlugin=jacoco
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
