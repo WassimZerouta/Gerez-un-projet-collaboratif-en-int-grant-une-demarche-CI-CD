@@ -20,6 +20,7 @@
 
   <properties>
     <java.version>11</java.version>
+    <jacoco.skip>false</jacoco.skip>
   </properties>
 
   <dependencies>
@@ -27,7 +28,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -40,6 +40,15 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <argLine>${jacoco.argLine}</argLine>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -65,11 +74,6 @@
             </goals>
             <configuration>
               <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-              <reports>
-                <xml enabled="true"/>
-                <html enabled="true"/>
-                <csv enabled="false"/>
-              </reports>
             </configuration>
           </execution>
         </executions>
