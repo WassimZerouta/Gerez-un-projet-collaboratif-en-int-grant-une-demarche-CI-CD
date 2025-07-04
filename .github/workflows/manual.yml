@@ -102,16 +102,14 @@ jobs:
 
       - name: Backend scan
         uses: sonarsource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
             -Dsonar.projectKey=wassimzerouta_bobapp-backend
             -Dsonar.organization=wassimzerouta
             -Dsonar.projectBaseDir=back
             -Dsonar.sources=src/main/java
-            -Dsonar.tests=src/test/java
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.coveragePlugin=jacoco
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-            -Dsonar.coverage.exclusions=**/test/**,**/*Test.java
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
