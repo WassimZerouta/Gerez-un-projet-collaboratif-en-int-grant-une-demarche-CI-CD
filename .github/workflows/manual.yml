@@ -110,6 +110,8 @@ jobs:
             -Dsonar.organization=wassimzerouta
             -Dsonar.projectBaseDir=back
             -Dsonar.sources=src/main/java
+            -Dsonar.tests=src/test/java
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.coveragePlugin=jacoco
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            -Dsonar.coverage.exclusions=**/test/**,**/*Test.java
